@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   nginx:
-    image: nginx:latest
+    image: docker.io/library/nginx:latest
     container_name: nginx-server
     ports:
       - "80:80" # Map port 80 on the host to port 80 in the container
