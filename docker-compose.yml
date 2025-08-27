@@ -14,7 +14,7 @@ services:
     restart: always
 
   certbot:
-    image: certbot/certbot
+    image: docker.io/certbot/certbot
     container_name: certbot
     volumes:
       - ./certbot/conf:/etc/letsencrypt
