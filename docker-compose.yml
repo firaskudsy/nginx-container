@@ -5,7 +5,19 @@ services:
     image: docker.io/library/nginx:latest
     container_name: nginx-server
     ports:
-      - "80:80" # Map port 80 on the host to port 80 in the container
+      - "80:80" # HTTP
+      - "443:443" # HTTPS
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro # Optional: Mount a custom Nginx configuration file
-    restart: always # Ensure the container restarts automatically
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    restart: always
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: ["/bin/sh", "-c"]
+    command: "trap exit TERM; while :; do sleep 1; done"
